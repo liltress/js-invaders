@@ -13,3 +13,10 @@ function intersection(a) {
     return a[1].indexOf(item) !== -1;
   });
 }
+
+function shallow_copy(a) {
+  if (typeof a != "object") {
+    return a;
+  }
+  return JSON.parse(JSON.stringify(a));
+}
