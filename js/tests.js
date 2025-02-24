@@ -76,24 +76,58 @@ function review() {
   assert_eq(query_without_several(["position", "name"]), [ent1]);
   assert_eq(query_comp(["position"], ["color"]), [ent3]);
 
-  EntityList = [];
 }
+
+EntityList = [];
+
 {
   // adding and removing systems
   let counter = 0;
   function inc() {
     entities = query_without("any");
-    for (let i = 0; i < entities.length; i++) {}
-    counter++;
+    counter += entities.length;
   }
   function temp() {}
 
-  add_system(inc, Schedule.UPDATE);
-  add_system(temp, Schedule.UPDATE);
+  spawn();
+  spawn();
+  spawn();
+
+  add_system(inc);
+  add_system(temp);
   assert_eq(SystemsUpdate, [inc, temp]);
 
-  remove_system(temp, Schedule.UPDATE);
+  old_system = remove_system(temp);
   assert_eq(SystemsUpdate, [inc]);
+  assert_eq(old_system, temp);
+
+  run_updates();
+  assert_eq(counter, 3);
+}
+
+EntityList = [];
+SystemsUpdate = [];
+
+// adding and removing components
+{
+  let ent = spawn();
+  insert_component(ent, "id", 66);
+  assert_eq(ent, { id: 66 });
+
+  let old_id = remove_component(ent, "id");
+  assert_eq(ent, {});
+  assert_eq(old_id, 66);
+
+  let counter = 0;
+  function add(ent, ...nums) {
+    console.log(ent, nums);
+    counter += ent["id"];
+    counter += nums[0][0]
+  }
+
+  insert_component_with_setup(ent, "id", 12, add, 5);
+  assert_eq(counter, 17);
+  console.log(counter, typeof counter);
 }
 
 /*

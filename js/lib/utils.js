@@ -14,7 +14,7 @@ function intersection(a) {
   });
 }
 
-function shallow_copy(a) {
+function deep_copy(a) {
   if (typeof a != "object") {
     return a;
   }

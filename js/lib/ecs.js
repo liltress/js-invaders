@@ -1,21 +1,22 @@
 var EntityList = []; // list of entity objects
-var SystemsUpdate = []; // list of functions that run per frame per entity with component
-var SystemsStartup = []; // list of functions that run when component is added
+var SystemsUpdate = []; // list of functions that run per frame
 
 // Entity managment
 function spawn() {
   //-> Entity
-  EntityList[EntityList.length] = {};
+  EntityList.push({});
   return EntityList[EntityList.length - 1];
 }
 
 function despawn(entity) {
   // remove
   //-> copy of the Entity
-  let copy = shallow_copy(entity);
+  let copy = deep_copy(entity);
 
-  const i = EntityList.indexOf(entity);
-  EntityList = EntityList.slice(0, i).concat(EntityList.slice(i + 1));
+  //const i = EntityList.indexOf(entity);
+  //EntityList = EntityList.slice(0, i).concat(EntityList.slice(i + 1));
+
+  EntityList = EntityList.filter((e) => e != entity);
 
   return copy;
 }
@@ -45,7 +46,7 @@ function query_comp(with_keys, without_keys) {
 }
 
 // System Managment
-
+/*
 class Schedule {
   static #_UPDATE = "Update";
   static #_STARTUP = "Startup";
@@ -90,9 +91,20 @@ function remove_system(system, schedule) {
     }
   }
 }
+*/
 
-function run_systems(schedule) {
-  let systems_list = get_systems_list(schedule);
+function add_system(system) {
+  SystemsUpdate.push(system);
+}
+
+function remove_system(system) {
+  let copy = system;
+  SystemsUpdate = SystemsUpdate.filter((s) => s != system);
+  return copy;
+}
+
+function run_updates() {
+  SystemsUpdate.forEach(f => f());
 }
 
 // Component Managment
@@ -113,4 +125,9 @@ function remove_component(entity, key) {
     return JSON.parse(copy_str);
   }
   return copy;
+}
+
+function insert_component_with_setup(entity, key, val, setup, ...extra_args) {
+  insert_component(entity, key, val);
+  setup(entity, extra_args); //must be function of form func(Entity, ...extra_args)
 }
