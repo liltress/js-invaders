@@ -109,25 +109,38 @@ function run_updates() {
 
 // Component Managment
 
+// Functions return the original entity pointer,
+// allowing them to be curried
+
+// Functions for adding a specific component, e g:
+// position, velocity, sprite, ai -
+// should do the same
+
 function insert_component(entity, key, val) {
   entity[key] = val;
+
+  return entity;
 }
 
 function remove_component(entity, key) {
   // -> value of the component
-  let copy = entity[key];
+  /*let copy = entity[key];
   let copy_str = JSON.stringify(entity[key]);
   let is_obj = typeof entity[key] == "object";
+  */
 
   delete entity[key];
-
+  /*
   if (is_obj) {
     return JSON.parse(copy_str);
   }
-  return copy;
+  */
+  return entity;
 }
 
 function insert_component_with_setup(entity, key, val, setup, ...extra_args) {
   insert_component(entity, key, val);
   setup(entity, extra_args); //must be function of form func(Entity, ...extra_args)
+
+  return entity;
 }

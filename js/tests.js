@@ -70,6 +70,8 @@ function review() {
   ent3["position"] = { x: 4, y: 5 };
   ent3["name"] = "John";
 
+  assert_eq(comp_obj_by_signature(ent1, { id: 100, color: "glay" }), true);
+
   assert_eq(query("color"), [ent1, ent2]);
   assert_eq(query_without("position"), [ent1]);
   assert_eq(query_several(["id", "position"]), [ent2, ent3]);
@@ -114,20 +116,31 @@ SystemsUpdate = [];
   insert_component(ent, "id", 66);
   assert_eq(ent, { id: 66 });
 
-  let old_id = remove_component(ent, "id");
-  assert_eq(ent, {});
-  assert_eq(old_id, 66);
-
   let counter = 0;
   function add(ent, ...nums) {
-    console.log(ent, nums);
+    //console.log(ent, nums);
     counter += ent["id"];
     counter += nums[0][0]
   }
 
   insert_component_with_setup(ent, "id", 12, add, 5);
   assert_eq(counter, 17);
-  console.log(counter, typeof counter);
+  //console.log(counter, typeof counter);
+}
+
+EntityList = [];
+SystemsStartup = [];
+SystemsUpdate = [];
+
+// testing vec2d game module
+{
+  let ent1 = spawn();
+  let ent1_copy = insert_vec2d(ent);
+
+  assert_eq(ent1, {position: { x: 0, y: 0 }});
+  assert_eq(ent1, ent_copy);
+
+  
 }
 
 /*
