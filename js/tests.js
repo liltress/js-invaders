@@ -135,10 +135,37 @@ SystemsUpdate = [];
 // testing vec2d game module
 {
   let ent1 = spawn();
-  let ent1_copy = insert_vec2d(ent);
+  let ent1_copy = insert_vec2d(ent1);
 
   assert_eq(ent1, {position: { x: 0, y: 0 }});
-  assert_eq(ent1, ent_copy);
+  assert_eq(ent1, ent1_copy);
+
+  assert_eq(get_vec2d_ptr(ent1), { x: 0, y: 0 });
+  assert_eq(get_vec2d_ptr(ent1.position), { x: 0, y: 0 });
+
+  let ent2 = pipe(
+    spawn,
+    insert_vec2d
+  )();
+  ent2.position = vec_add(ent2, { x: 3, y: 4 });
+  assert_eq(ent2, {position: { x: 3, y: 4 }});   
+
+  assert_eq(
+    vec_sub(ent1, ent2),
+    { x: -3, y: -4 }
+  );
+
+  ent1.position = vec_add(ent1, { x: 5, y: 0});
+
+  assert_eq(
+    vec_mult(ent1, 5),
+    { x: 25, y: 0 }
+  );
+
+  assert_eq(
+    vec_dot(ent1, ent2),
+    15 
+  );
 
   
 }

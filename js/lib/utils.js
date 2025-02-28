@@ -14,7 +14,7 @@ function intersection(a) {
   });
 }
 
-function deep_copy(a) {
+function deep_copy(a) { // my original
   if (typeof a != "object") {
     return a;
   }
@@ -24,3 +24,6 @@ function deep_copy(a) {
 function comp_obj_by_signature(obj1, obj2) {
   return (JSON.stringify(Object.keys(obj1)) == JSON.stringify(Object.keys(obj2)));
 }
+
+pipe = (...fns) => (x) => fns.reduce((v, f) => f(v), x); 
+// borrowed from first google result for js function pipe
