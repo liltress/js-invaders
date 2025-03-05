@@ -1,3 +1,7 @@
+// this file contains unit tests that run before the game is started
+// it is unneeded for the game to work and can be ommited out of the index.html for playing
+// its here to make development easier
+
 var successes = 0;
 var failures = 0;
 
@@ -166,14 +170,27 @@ SystemsUpdate = [];
     vec_dot(ent1, ent2),
     15 
   );
-
-  
 }
 
-/*
+{
+  ent1 = pipe(
+    spawn,
+    insert_sprite,
+    insert_vec2d,
+  )();
+  ent2 = pipe(
+    spawn,
+    insert_sprite,
+    insert_vec2d,
+    insert_nodraw,
+  )();
+
+  assert_eq(query_several(["sprite", "position"]), [ent1, ent2]);
+  assert_eq(query_comp(["sprite", "position"], ["nodraw"]), [ent1]);
+}
+
 EntityList = [];
 SystemsStartup = [];
 SystemsUpdate = [];
-*/
 
 review();

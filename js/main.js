@@ -1,1 +1,24 @@
-var Viewport = document.getElementsByName("Viewport");
+const c = document.getElementById("Viewport");
+const context = c.getContext("2d");
+
+ent1 = pipe(
+  spawn,
+  insert_vec2d,
+  insert_sprite,
+)();
+ent1.position = vec_add(ent1, { x:300, y: 300 });
+ent2 = pipe(
+  spawn,
+  insert_vec2d,
+  insert_sprite,
+)();
+ent2.position = vec_add(ent2, { x:200, y: 500 });
+ent2.sprite.color = "#FFFF00";
+ent3 = pipe(
+  spawn,
+  insert_vec2d,
+  insert_sprite,
+  insert_nodraw,
+)();
+
+draw_call(context);
