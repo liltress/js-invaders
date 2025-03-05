@@ -30,10 +30,9 @@ function insert_nodraw(ent) {
 function draw_call(ctx) {
   let drawables = query_comp(["position", "sprite"], ["nodraw"]);
 
-  console.log(drawables);
+  //console.log(drawables);
 
   drawables.forEach(drawable => {
-    console.log(drawable);
     ctx.beginPath();
     ctx.arc(
       drawable.position.x,

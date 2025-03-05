@@ -13,12 +13,12 @@ ent2 = pipe(
   insert_sprite,
 )();
 ent2.position = vec_add(ent2, { x:200, y: 500 });
-ent2.sprite.color = "#FFFF00";
+ent2.sprite.color = Colors.Green;
 ent3 = pipe(
   spawn,
   insert_vec2d,
   insert_sprite,
-  insert_nodraw,
 )();
+ent3.position = vec_add(ent3, { x: 100, y: 50 })
 
 draw_call(context);
