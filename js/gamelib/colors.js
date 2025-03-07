@@ -1,4 +1,5 @@
 const Colors = {
+  // stolen from catpuccino
   Rosewater: "#f5e0dc",
   Flamingo: "#f2cdcd",
   Pink: "#f5c2e7",
