@@ -48,6 +48,13 @@ function review() {
   assert_eq({ id: 5 }, { ig: 5 });
 }
 */
+
+{
+  let obj = { x: 0, y: 1 };
+  empty_object(obj);
+  assert_eq(obj, {});
+}
+
 {
   // adding and removing components
   let ent1 = spawn();

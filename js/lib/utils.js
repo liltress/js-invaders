@@ -27,3 +27,13 @@ function comp_obj_by_signature(obj1, obj2) {
 
 pipe = (...fns) => (x) => fns.reduce((v, f) => f(v), x); 
 // borrowed from first google result for js function pipe
+
+function sleep(ms) { // must use inside async functions
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function empty_object(obj) {
+  Object.keys(obj).forEach(key => {
+    delete obj[key];
+  });
+}

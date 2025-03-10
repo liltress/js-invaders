@@ -27,7 +27,7 @@ function insert_nodraw(ent) {
 }
 
 // systems
-function draw_call(ctx) {
+function draw_system(ctx=context) {
   let drawables = query_comp(["position", "sprite"], ["nodraw"]);
 
   //console.log(drawables);
