@@ -21,27 +21,29 @@ function despawn(entity) {
   return copy;
 }
 
-function query(key) {
+function query(key, entities = EntityList) {
   //-> List<Entity>
-  return EntityList.filter((entity) => key in entity);
+  //console.log("there is a query inwoked", entities);
+  return entities.filter((entity) => key in entity);
 }
 
-function query_without(key) {
-  return EntityList.filter((entity) => !(key in entity));
+function query_without(key, entities = EntityList) {
+  return entities.filter((entity) => !(key in entity));
 }
 
-function query_several(keys) {
-  return intersection(keys.map(query));
+function query_several(keys, entities = EntityList) {
+  //console.log("AAAAAAAAAAAAAAAAA", entities);
+  return intersection(keys.map((key) => query(key, entities)));
 }
 
-function query_without_several(keys) {
-  return intersection(keys.map(query_without));
+function query_without_several(keys, entities = EntityList) {
+  return intersection(keys.map((key) => query_without(key, entities)));
 }
 
-function query_comp(with_keys, without_keys) {
+function query_comp(with_keys, without_keys, entities = EntityList) {
   return intersection([
-    query_several(with_keys),
-    query_without_several(without_keys),
+    query_several(with_keys, entities),
+    query_without_several(without_keys, entities),
   ]);
 }
 
@@ -104,7 +106,7 @@ function remove_system(system) {
 }
 
 function run_updates() {
-  SystemsUpdate.forEach(f => f());
+  SystemsUpdate.forEach((f) => f());
 }
 
 // Component Managment
