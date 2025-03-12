@@ -56,8 +56,7 @@ function draw_circle(ctx, circle_ent) {
 }
 
 // systems
-function draw_system(ctx=context) {
-  let drawables = query_comp(["position", "sprite"], ["nodraw"]);
+function draw_system(drawables, ctx=context) {
 
   //console.log(drawables);
 

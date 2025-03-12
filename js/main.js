@@ -26,11 +26,11 @@ ent1 = pipe(
   let count = 0;
   let input = {};
 
-  let loop = true;
-  while (loop) {
+  while (true) {
 
     input_system(input);
-    draw_system();
+    let drawables = query_comp(["position", "sprite"], ["nodraw"]);
+    draw_system(drawables);
 
     await sleep(66);
     //count++;
