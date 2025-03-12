@@ -60,6 +60,8 @@ function draw_system(drawables, ctx=context) {
 
   //console.log(drawables);
 
+  ctx.clearRect(0, 0, 1200, 675);
+
   drawables.forEach(drawable => {
     switch (drawable.sprite.type) {
       case "circle": {

@@ -32,7 +32,7 @@ ent1 = pipe(
     let drawables = query_comp(["position", "sprite"], ["nodraw"]);
     draw_system(drawables);
 
-    await sleep(66);
+    await sleep(132);
     //count++;
     //console.log(count);
     console.log(input);
