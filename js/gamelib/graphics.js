@@ -42,6 +42,13 @@ function insert_nodraw(ent) {
   return ent;
 }
 
+function comp_drawable_by_layer(d1, d2) {
+  if (d1.sprite.layer > d2.sprite.layer) {
+    return true
+  }
+  return false
+}
+
 function draw_circle(ctx, circle_ent) {
         ctx.beginPath();
         ctx.arc(
@@ -56,9 +63,14 @@ function draw_circle(ctx, circle_ent) {
 }
 
 // systems
-function draw_system(drawables, ctx=context) {
+function draw_system(drwbs, ctx=context) {
 
-  //console.log(drawables);
+  let drawables = drwbs.sort((d1, d2) => {
+    let a = d1.sprite.layer < d2.sprite.layer;
+    console.log(a);
+    return a
+  });
+  console.log(drawables);
 
   ctx.clearRect(0, 0, 1200, 675);
 

@@ -86,3 +86,7 @@ function vec_lerp(vec1, vec2, t) {
     v2 = get_vec2d_ptr(vec2);
     return { x: (v1.x + (v2.x - v1.x) * t), y: (v1.y + (v2.y - v2.y) * t) };
 }
+
+function vec_bezier(t, ...vecs) {
+    // todo recursive bezier
+}

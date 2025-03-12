@@ -14,14 +14,15 @@ ent1 = pipe(
     insert_vec2d,
     insert_circle,
   )();
-  ent2.position = vec_add(ent2, { x:200, y: 500 });
+  ent2.position = vec_add(ent2, { x:325, y: 300});
   ent2.sprite.color = Colors.Green;
+  ent2.sprite.layer = 2;
   ent3 = pipe(
     spawn,
     insert_vec2d,
     insert_circle,
   )();
-  ent3.position = vec_add(ent3, { x: 100, y: 50 })
+  ent3.position = vec_add(ent3, { x: 350, y: 300 })
 
   let count = 0;
   let input = {};
