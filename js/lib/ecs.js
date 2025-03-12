@@ -41,6 +41,15 @@ function query_without_several(keys, entities = EntityList) {
 }
 
 function query_comp(with_keys, without_keys, entities = EntityList) {
+  if (with_keys.length == 0 && without_keys.length == 0) {
+    return entities;
+  }
+  if (with_keys.length == 0) {
+    return query_without_several(without_keys, entities);
+  }
+  if (without_keys.length == 0) {
+    return query_severa(with_keys, entities)
+  }
   return intersection([
     query_several(with_keys, entities),
     query_without_several(without_keys, entities),
@@ -95,18 +104,25 @@ function remove_system(system, schedule) {
 }
 */
 
-function add_system(system) {
-  SystemsUpdate.push(system);
+function add_system(system, wk, wok) {
+  SystemsUpdate.push({
+    func: system,
+    with_keys: wk,
+    without_keys: wok,
+  });
 }
 
-function remove_system(system) {
-  let copy = system;
-  SystemsUpdate = SystemsUpdate.filter((s) => s != system);
+function remove_system(system_function) {
+  let copy = system_function;
+  SystemsUpdate = SystemsUpdate.filter((s) => s.func != system_function);
   return copy;
 }
 
 function run_updates() {
-  SystemsUpdate.forEach((f) => f());
+  SystemsUpdate.forEach(system => {
+    //console.log("from system run:", system);
+    system.func( query_comp([],[]) );
+  });
 }
 
 // Component Managment

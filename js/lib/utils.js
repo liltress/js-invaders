@@ -1,6 +1,8 @@
 function intersection(a) {
   // borrowed from stack overflow
   // takes List<List<T>> returns List<T>
+
+
   if (a.length > 2)
     return intersection([
       intersection(a.slice(0, a.length / 2)),
@@ -8,7 +10,9 @@ function intersection(a) {
     ]);
 
   if (a.length == 1) return a[0];
+  if (a.length == 0) return [];
 
+  //console.log("from inside intersection:", a);
   return a[0].filter(function (item) {
     return a[1].indexOf(item) !== -1;
   });

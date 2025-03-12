@@ -95,9 +95,8 @@ EntityList = [];
 {
   // adding and removing systems
   let counter = 0;
-  function inc() {
-    entities = query_without("any");
-    counter += entities.length;
+  function inc(ents) {
+    counter += ents.length;
   }
   function temp() {}
 
@@ -105,14 +104,18 @@ EntityList = [];
   spawn();
   spawn();
 
-  add_system(inc);
-  add_system(temp);
-  assert_eq(SystemsUpdate, [inc, temp]);
+  add_system(inc, [], []);
+  add_system(temp, [], []);
+  assert_eq(SystemsUpdate, [
+      {func: inc, with_keys: [], without_keys: []},
+      {func: temp, with_keys: [], without_keys: []},
+  ]);
 
   old_system = remove_system(temp);
-  assert_eq(SystemsUpdate, [inc]);
+  assert_eq(SystemsUpdate, [{func: inc, with_keys: [], without_keys: []}]);
   assert_eq(old_system, temp);
 
+  //console.log(SystemsUpdate);
   run_updates();
   assert_eq(counter, 3);
 }
