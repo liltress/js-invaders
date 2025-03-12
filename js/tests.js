@@ -167,8 +167,8 @@ SystemsUpdate = [];
 }
 
 {
-  ent1 = pipe(spawn, insert_sprite, insert_vec2d)();
-  ent2 = pipe(spawn, insert_sprite, insert_vec2d, insert_nodraw)();
+  ent1 = pipe(spawn, insert_circle, insert_vec2d)();
+  ent2 = pipe(spawn, insert_circle, insert_vec2d, insert_nodraw)();
 
   assert_eq(query_several(["sprite", "position"]), [ent1, ent2]);
   assert_eq(query_comp(["sprite", "position"], ["nodraw"]), [ent1]);
