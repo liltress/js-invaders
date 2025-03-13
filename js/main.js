@@ -9,6 +9,7 @@ const context = c.getContext("2d");
 
   ent2 = pipe(spawn, insert_vec2d, insert_circle)();
   ent2.position = vec_add(ent2, { x: 325, y: 300 });
+  insert_vec2d(ent2, 1, -1, "velocity");
   ent2.sprite.color = Colors.Green;
   ent2.sprite.layer = 2;
 
@@ -17,14 +18,17 @@ const context = c.getContext("2d");
 
   input_holder = pipe(spawn, insert_input)();
 
-  add_system(draw_system, ["position", "sprite"], ["nodraw"]);
   add_system(input_system, ["input"], []);
+
+  add_system(velocity_system, ["position", "velocity"], []);
+
+  add_system(draw_system, ["position", "sprite"], ["nodraw"]);
 
   while (true) {
     run_updates();
 
-    await sleep(500);
-    //console.log(input_holder.input);
+    await sleep(30);
+    console.log(input_holder.input);
     //break;
   }
 })();
