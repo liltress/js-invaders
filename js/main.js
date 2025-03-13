@@ -17,14 +17,14 @@ const context = c.getContext("2d");
 
   input_holder = pipe(spawn, insert_input)();
 
-  while (true) {
-    add_system(draw_system, ["position", "sprite"], ["nodraw"]);
-    add_system(input_system, ["input"], []);
+  add_system(draw_system, ["position", "sprite"], ["nodraw"]);
+  add_system(input_system, ["input"], []);
 
+  while (true) {
     run_updates();
 
-    await sleep(132);
-    console.log(input_holder);
-    break;
+    await sleep(500);
+    //console.log(input_holder.input);
+    //break;
   }
 })();

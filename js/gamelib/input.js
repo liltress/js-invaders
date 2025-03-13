@@ -16,12 +16,14 @@ function handle_keypress(ent, keycode, action_str, inp_value = true) {
 
 function input_system(ents) {
   // ! FOUND A BETTER WAY TO DO THIS
+  //console.log("from inside input system:", ents);
   ents.forEach((ent) => {
-    handle_keypress(ent, "Space", "physics_step");
+    handle_keypress(ent, " ", "physics_step");
   });
 }
 
 function insert_input(ent) {
   // adds the input component that copies which inputs you have
   insert_component(ent, "input", {});
+  return ent;
 }
