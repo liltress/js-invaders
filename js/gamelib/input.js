@@ -1,14 +1,27 @@
 // handles getting the input from the user
 
-function input_system(inp=input) { // ! FIND A BETTER WAY TO DO THIS WELL 
-  document.addEventListener("keydown", function(event) {
-    if (event.keyCode == 32) { // SPACEBAR
-      inp["physics_run"] = true;
+function handle_keypress(ent, keycode, action_str, inp_value = true) {
+  document.addEventListener("keydown", function (event) {
+    if (event.key == keycode) {
+      // SPACEBAR
+      ent.input[action_str] = inp_value;
     }
   });
-  document.addEventListener("keyup", function(event) {
-    if (event.keyCode == 32) {
-      delete inp["physics_run"];
+  document.addEventListener("keyup", function (event) {
+    if (event.key == keycode) {
+      delete ent.input[action_str];
     }
   });
+}
+
+function input_system(ents) {
+  // ! FOUND A BETTER WAY TO DO THIS
+  ents.forEach((ent) => {
+    handle_keypress(ent, "Space", "physics_step");
+  });
+}
+
+function insert_input(ent) {
+  // adds the input component that copies which inputs you have
+  insert_component(ent, "input", {});
 }

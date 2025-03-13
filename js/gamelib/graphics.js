@@ -17,64 +17,61 @@
 */
 
 // component management
-function insert_circle(ent, color="#FF0000", radius=20, layer=1) {
-  insert_component(
-    ent,
-    "sprite",
-    {
-      type: "circle",
-      layer: layer,
-      color: color,
-      spritedata: {
-        radius: radius,
-      }
-    }
-  );
+function insert_circle(ent, color = "#FF0000", radius = 20, layer = 1) {
+  insert_component(ent, "sprite", {
+    type: "circle",
+    layer: layer,
+    color: color,
+    spritedata: {
+      radius: radius,
+    },
+  });
   return ent;
 }
 
 function insert_nodraw(ent) {
-  insert_component(
-    ent,
-    "nodraw",
-    undefined,
-  )
+  insert_component(ent, "nodraw", undefined);
   return ent;
 }
 
 function draw_circle(ctx, circle_ent) {
-        ctx.beginPath();
-        ctx.arc(
-          circle_ent.position.x,
-          circle_ent.position.y,
-          circle_ent.sprite.spritedata.radius,
-          0,
-          10,
-        );
-        ctx.fillStyle = circle_ent.sprite.color;
-        ctx.fill();
+  ctx.beginPath();
+  ctx.arc(
+    circle_ent.position.x,
+    circle_ent.position.y,
+    circle_ent.sprite.spritedata.radius,
+    0,
+    10,
+  );
+  ctx.fillStyle = circle_ent.sprite.color;
+  ctx.fill();
 }
 
 // systems
-function draw_system(drwbs, ctx=context) {
-
+function draw_system(drwbs, ctx = context) {
   let drawables = drwbs.sort((d1, d2) => {
-    let a = d1.sprite.layer < d2.sprite.layer ? -1 : d1.sprite.layer == d2.sprite.layer ? 0 : 1;
+    //console.log("d1:", d1, "d2:", d2);
+    let a =
+      d1.sprite.layer < d2.sprite.layer
+        ? -1
+        : d1.sprite.layer == d2.sprite.layer
+          ? 0
+          : 1;
     //console.log(a);
     return a;
   });
-  console.log(drawables);
+  //console.log(drawables);
 
   ctx.clearRect(0, 0, 1200, 675);
 
-  drawables.forEach(drawable => {
+  drawables.forEach((drawable) => {
     switch (drawable.sprite.type) {
       case "circle": {
         draw_circle(ctx, drawable);
-        break; 
+        break;
       }
       default:
-        console.log("failed to render entity:", drawable);
+        console.log("unrecognized drawable type:", drawable);
     }
   });
 }

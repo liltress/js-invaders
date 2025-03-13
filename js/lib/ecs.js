@@ -48,7 +48,7 @@ function query_comp(with_keys, without_keys, entities = EntityList) {
     return query_without_several(without_keys, entities);
   }
   if (without_keys.length == 0) {
-    return query_severa(with_keys, entities)
+    return query_several(with_keys, entities);
   }
   return intersection([
     query_several(with_keys, entities),
@@ -119,9 +119,9 @@ function remove_system(system_function) {
 }
 
 function run_updates() {
-  SystemsUpdate.forEach(system => {
+  SystemsUpdate.forEach((system) => {
     //console.log("from system run:", system);
-    system.func( query_comp([],[]) );
+    system.func(query_comp(system.with_keys, system.without_keys));
   });
 }
 
