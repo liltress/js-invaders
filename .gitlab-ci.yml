@@ -2,11 +2,11 @@ pages:
     stage: deploy
     script:
     - mkdir .public
-    - rsync -r * .public
+    - cp -r * .public
     - mkdir public
     - mv .public public
-    - ls .
-    - ls ./public
+    - ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+
     artifacts:
         paths:
         - public
