@@ -4,17 +4,27 @@ const context = c.getContext("2d");
 (async () => {
   // wrapping the game logic in an anonymous function to enable async functionality
 
-  ent1 = pipe(spawn, insert_vec2d, insert_circle)();
-  ent1.position = vec_add(ent1, { x: 300, y: 300 });
+  ent1 = pipe_with_args(
+    spawn,
+    { func: insert_vec2d, args: { key: "position", x: 300, y: 300 } },
+    insert_circle,
+  )();
 
-  ent2 = pipe(spawn, insert_vec2d, insert_circle)();
-  ent2.position = vec_add(ent2, { x: 325, y: 300 });
-  insert_vec2d(ent2, 1, -1, "velocity");
-  ent2.sprite.color = Colors.Green;
-  ent2.sprite.layer = 2;
+  ent2 = pipe_with_args(
+    spawn,
+    { func: insert_vec2d, args: { key: "position", x: 325, y: 300 } },
+    { func: insert_vec2d, args: { key: "velocity", x: 1, y: -1 } },
+    {
+      func: insert_circle,
+      args: { layer: 2, color: Colors.Green, radius: 25 },
+    },
+  )();
 
-  ent3 = pipe(spawn, insert_vec2d, insert_circle)();
-  ent3.position = vec_add(ent3, { x: 350, y: 300 });
+  ent3 = pipe_with_args(
+    spawn,
+    { func: insert_vec2d, args: { key: "position", x: 350, y: 300 } },
+    insert_circle,
+  )();
 
   input_holder = pipe(spawn, insert_input)();
 
@@ -27,8 +37,8 @@ const context = c.getContext("2d");
   while (true) {
     run_updates();
 
-    await sleep(30);
-    console.log(input_holder.input);
+    await sleep(30 * 10);
+    //console.log(input_holder.input);
     //break;
   }
 })();

@@ -17,13 +17,13 @@
 */
 
 // component management
-function insert_circle(ent, color = "#FF0000", radius = 20, layer = 1) {
+function insert_circle(ent, args = { color: "#FF0000", radius: 20, layer: 1 }) {
   insert_component(ent, "sprite", {
     type: "circle",
-    layer: layer,
-    color: color,
+    layer: args.layer,
+    color: args.color,
     spritedata: {
-      radius: radius,
+      radius: args.radius,
     },
   });
   return ent;

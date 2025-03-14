@@ -2,7 +2,6 @@ function intersection(a) {
   // borrowed from stack overflow
   // takes List<List<T>> returns List<T>
 
-
   if (a.length > 2)
     return intersection([
       intersection(a.slice(0, a.length / 2)),
@@ -18,7 +17,8 @@ function intersection(a) {
   });
 }
 
-function deep_copy(a) { // my original
+function deep_copy(a) {
+  // my original
   if (typeof a != "object") {
     return a;
   }
@@ -26,18 +26,33 @@ function deep_copy(a) { // my original
 }
 
 function comp_obj_by_signature(obj1, obj2) {
-  return (JSON.stringify(Object.keys(obj1)) == JSON.stringify(Object.keys(obj2)));
+  return JSON.stringify(Object.keys(obj1)) == JSON.stringify(Object.keys(obj2));
 }
 
-pipe = (...fns) => (x) => fns.reduce((v, f) => f(v), x); 
-// borrowed from first google result for js function pipe
+pipe =
+  (...fns) =>
+  (x) =>
+    fns.reduce((v, f) => f(v), x);
 
-function sleep(ms) { // must use inside async functions
-  return new Promise(resolve => setTimeout(resolve, ms));
+pipe_with_args =
+  (...fns) =>
+  (x) =>
+    fns.reduce((v, f) => {
+      switch (typeof f) {
+        case "function":
+          return f(v);
+        case "object":
+          return f.func(v, f.args);
+      }
+    }, x);
+
+function sleep(ms) {
+  // must use inside async functions
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function empty_object(obj) {
-  Object.keys(obj).forEach(key => {
+  Object.keys(obj).forEach((key) => {
     delete obj[key];
   });
 }
