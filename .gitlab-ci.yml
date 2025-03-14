@@ -6,7 +6,8 @@ pages:
     - mkdir public
     - mv .public public
     - ls .
-    - ls public
+    - ls ./public
+    - ls ./.public
     artifacts:
         paths:
         - public
