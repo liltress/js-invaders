@@ -2,12 +2,11 @@ pages:
     stage: deploy
     script:
     - mkdir .public
-    - cp -r * .public
+    - rsync -r * .public
     - mkdir public
     - mv .public public
     - ls .
     - ls ./public
-    - ls ./.public
     artifacts:
         paths:
         - public
