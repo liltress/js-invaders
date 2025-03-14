@@ -4,9 +4,8 @@ pages:
     - mkdir .public
     - cp -r * .public
     - mkdir public
-    - mv .public public
     - ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
-    - cd public
+    - cd .public
     - ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
     artifacts:
