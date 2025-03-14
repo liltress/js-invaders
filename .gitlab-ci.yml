@@ -5,6 +5,8 @@ pages:
     - cp -r * .public
     - mkdir public
     - mv .public public
+    - ls .
+    - ls public
     artifacts:
         paths:
         - public
