@@ -107,12 +107,14 @@ EntityList = [];
   add_system(inc, [], []);
   add_system(temp, [], []);
   assert_eq(SystemsUpdate, [
-      {func: inc, with_keys: [], without_keys: []},
-      {func: temp, with_keys: [], without_keys: []},
+    { func: inc, with_keys: [], without_keys: [], do_delta: false },
+    { func: temp, with_keys: [], without_keys: [], do_delta: false },
   ]);
 
   old_system = remove_system(temp);
-  assert_eq(SystemsUpdate, [{func: inc, with_keys: [], without_keys: []}]);
+  assert_eq(SystemsUpdate, [
+    { func: inc, with_keys: [], without_keys: [], do_delta: false },
+  ]);
   assert_eq(old_system, temp);
 
   //console.log(SystemsUpdate);

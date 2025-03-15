@@ -104,11 +104,12 @@ function remove_system(system, schedule) {
 }
 */
 
-function add_system(system, wk, wok) {
+function add_system(system, wk, wok, do_delta = false) {
   SystemsUpdate.push({
     func: system,
     with_keys: wk,
     without_keys: wok,
+    do_delta: do_delta,
   });
 }
 
@@ -118,10 +119,16 @@ function remove_system(system_function) {
   return copy;
 }
 
-function run_updates() {
+function run_updates(delta) {
   SystemsUpdate.forEach((system) => {
     //console.log("from system run:", system);
-    system.func(query_comp(system.with_keys, system.without_keys));
+    if (!system.do_delta) {
+      system.func(query_comp(system.with_keys, system.without_keys));
+      //console.log("dont do delta");
+    } else {
+      //console.log("do delta");
+      system.func(query_comp(system.with_keys, system.without_keys), delta);
+    }
   });
 }
 
