@@ -18,6 +18,40 @@ player = pipe_with_args(
   insert_input,
 )();
 
+wall_left = pipe_with_args(
+  spawn,
+  { func: insert_vec2d, args: { key: "position", x: 0, y: 0 } },
+  {
+    func: insert_wall,
+    args: { vert: true },
+  },
+)();
+wall_right = pipe_with_args(
+  spawn,
+  { func: insert_vec2d, args: { key: "position", x: 1200, y: 0 } },
+  {
+    func: insert_wall,
+    args: { vert: true },
+  },
+)();
+wall_top = pipe_with_args(
+  spawn,
+  { func: insert_vec2d, args: { key: "position", x: 0, y: 675 } },
+  {
+    func: insert_wall,
+    args: { vert: true },
+  },
+)();
+
+wall_bottom = pipe_with_args(
+  spawn,
+  { func: insert_vec2d, args: { key: "position", x: 1200, y: 675 } },
+  {
+    func: insert_wall,
+    args: { vert: true },
+  },
+)();
+
 input_holder = pipe(spawn, insert_input)();
 
 // System declaration
