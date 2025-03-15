@@ -56,3 +56,7 @@ function empty_object(obj) {
     delete obj[key];
   });
 }
+
+// cartesian product of two arrays
+const cartesian = (...a) =>
+  a.reduce((a, b) => a.flatMap((d) => b.map((e) => [d, e].flat())));

@@ -53,6 +53,15 @@ function review() {
   let obj = { x: 0, y: 1 };
   empty_object(obj);
   assert_eq(obj, {});
+
+  assert_eq(cartesian([1, 2], [3, 4, 5]), [
+    [1, 3],
+    [1, 4],
+    [1, 5],
+    [2, 3],
+    [2, 4],
+    [2, 5],
+  ]);
 }
 
 {

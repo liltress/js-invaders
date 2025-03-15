@@ -15,11 +15,14 @@ player = pipe_with_args(
     func: insert_circle,
     args: { layer: 2, color: Colors.Green, radius: 15 },
   },
+  insert_collide,
+  { func: insert_circular_collider, args: { radius: 15 } },
   insert_input,
 )();
 
 wall_left = pipe_with_args(
   spawn,
+  insert_collide,
   { func: insert_vec2d, args: { key: "position", x: 0, y: 0 } },
   {
     func: insert_wall,
@@ -28,6 +31,7 @@ wall_left = pipe_with_args(
 )();
 wall_right = pipe_with_args(
   spawn,
+  insert_collide,
   { func: insert_vec2d, args: { key: "position", x: 1200, y: 0 } },
   {
     func: insert_wall,
@@ -36,6 +40,7 @@ wall_right = pipe_with_args(
 )();
 wall_top = pipe_with_args(
   spawn,
+  insert_collide,
   { func: insert_vec2d, args: { key: "position", x: 0, y: 675 } },
   {
     func: insert_wall,
@@ -45,6 +50,7 @@ wall_top = pipe_with_args(
 
 wall_bottom = pipe_with_args(
   spawn,
+  insert_collide,
   { func: insert_vec2d, args: { key: "position", x: 1200, y: 675 } },
   {
     func: insert_wall,
@@ -62,6 +68,7 @@ add_system(
   [],
   (do_delta = true),
 );
+add_system(wall_colission_system, ["collide"], ["nocollide"]);
 add_system(
   velocity_system_toggle,
   ["position", "velocity"],
@@ -86,6 +93,6 @@ let timeLastFrame = performance.now();
 
     timeLastFrame = timeThisFrame;
     await sleep(Math.max(0, minFrameTime - delta));
-    //break;
+    break;
   }
 })();
