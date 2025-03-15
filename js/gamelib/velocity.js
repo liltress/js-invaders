@@ -7,3 +7,9 @@ function velocity_system(ents, delta = 1) {
     ent.position = vec_add(ent.position, vec_mult(ent.velocity, delta));
   });
 }
+
+function velocity_system_toggle(ents, delta = 1) {
+  if (!input_holder.input.physics_pause) {
+    velocity_system(ents, delta);
+  }
+}

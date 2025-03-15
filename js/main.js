@@ -18,6 +18,8 @@ player = pipe_with_args(
   insert_input,
 )();
 
+input_holder = pipe(spawn, insert_input)();
+
 // System declaration
 add_system(input_system, ["input"], []);
 add_system(
@@ -26,7 +28,12 @@ add_system(
   [],
   (do_delta = true),
 );
-add_system(velocity_system, ["position", "velocity"], [], (do_delta = true));
+add_system(
+  velocity_system_toggle,
+  ["position", "velocity"],
+  [],
+  (do_delta = true),
+);
 add_system(draw_system, ["position", "sprite"], ["nodraw"]);
 
 const minFrameTime = 1000 / 60;
