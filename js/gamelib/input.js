@@ -18,7 +18,9 @@ function input_system(ents) {
   // ! FOUND A BETTER WAY TO DO THIS
   //console.log("from inside input system:", ents);
   ents.forEach((ent) => {
-    handle_keypress(ent, " ", "physics_step");
+    handle_keypress(ent, " ", "physics_pause");
+    handle_keypress(ent, "a", "turn_left");
+    handle_keypress(ent, "d", "turn_right");
   });
 }
 

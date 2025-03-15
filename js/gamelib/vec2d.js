@@ -90,3 +90,10 @@ function vec_lerp(vec1, vec2, t) {
 function vec_bezier(t, ...vecs) {
   // todo recursive bezier
 }
+
+function vec_rotate(vec, rad) {
+  len = vec_length(vec);
+  angle = Math.atan2(vec.y, vec.x) + rad;
+
+  return { x: Math.cos(angle) * len, y: Math.sin(angle) * len };
+}
