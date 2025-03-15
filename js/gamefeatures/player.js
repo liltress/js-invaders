@@ -12,6 +12,11 @@ function insert_player_controller(
   return ent;
 }
 
+function insert_player(ent) {
+  insert_component(ent, "player", null);
+  return ent;
+}
+
 function player_controller_system(players, delta) {
   players.forEach((player) => {
     /*
@@ -24,8 +29,13 @@ function player_controller_system(players, delta) {
       delta,
     );
     */
-    player.player_controller.looking_at +=
-      player.player_controller.steer_rate * delta;
+    if (player.input.turn_counter && !player.input.turn_clockwise) {
+      player.player_controller.looking_at -=
+        player.player_controller.steer_rate * delta;
+    } else if (!player.input.turn_counter && player.input.turn_clockwise) {
+      player.player_controller.looking_at +=
+        player.player_controller.steer_rate * delta;
+    }
 
     player.velocity = {
       x:

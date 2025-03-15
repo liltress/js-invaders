@@ -2,31 +2,20 @@ const c = document.getElementById("Viewport");
 const context = c.getContext("2d");
 
 //entity declaration
-ent1 = pipe_with_args(
-  spawn,
-  { func: insert_vec2d, args: { key: "position", x: 300, y: 300 } },
-  insert_circle,
-)();
-
 player = pipe_with_args(
   spawn,
+  insert_player,
   { func: insert_vec2d, args: { key: "position", x: 325, y: 300 } },
   { func: insert_vec2d, args: { key: "velocity", x: 0, y: 0 } },
   {
     func: insert_player_controller,
-    args: { steer_rate: 1, looking_at: 0, speed: 20 },
+    args: { steer_rate: 5, looking_at: 0, speed: 90 },
   },
   {
     func: insert_circle,
-    args: { layer: 2, color: Colors.Green, radius: 25 },
+    args: { layer: 2, color: Colors.Green, radius: 15 },
   },
   insert_input,
-)();
-
-ent3 = pipe_with_args(
-  spawn,
-  { func: insert_vec2d, args: { key: "position", x: 350, y: 300 } },
-  insert_circle,
 )();
 
 // System declaration

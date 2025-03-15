@@ -9,7 +9,7 @@ function handle_keypress(ent, keycode, action_str, inp_value = true) {
   });
   document.addEventListener("keyup", function (event) {
     if (event.key == keycode) {
-      delete ent.input[action_str];
+      ent.input[action_str] = false;
     }
   });
 }
@@ -19,8 +19,8 @@ function input_system(ents) {
   //console.log("from inside input system:", ents);
   ents.forEach((ent) => {
     handle_keypress(ent, " ", "physics_pause");
-    handle_keypress(ent, "a", "turn_left");
-    handle_keypress(ent, "d", "turn_right");
+    handle_keypress(ent, "a", "turn_counter");
+    handle_keypress(ent, "d", "turn_clockwise");
   });
 }
 
