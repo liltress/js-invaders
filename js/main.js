@@ -1,6 +1,7 @@
 const c = document.getElementById("Viewport");
 const context = c.getContext("2d");
 
+//entity declaration
 ent1 = pipe_with_args(
   spawn,
   { func: insert_vec2d, args: { key: "position", x: 300, y: 300 } },
@@ -10,8 +11,11 @@ ent1 = pipe_with_args(
 player = pipe_with_args(
   spawn,
   { func: insert_vec2d, args: { key: "position", x: 325, y: 300 } },
-  { func: insert_vec2d, args: { key: "velocity", x: 20, y: -20 } },
-  { func: insert_player_controller, args: { steer_rate: 1 } },
+  { func: insert_vec2d, args: { key: "velocity", x: 0, y: 0 } },
+  {
+    func: insert_player_controller,
+    args: { steer_rate: 1, looking_at: 0, speed: 20 },
+  },
   {
     func: insert_circle,
     args: { layer: 2, color: Colors.Green, radius: 25 },
@@ -25,8 +29,7 @@ ent3 = pipe_with_args(
   insert_circle,
 )();
 
-input_holder = pipe(spawn, insert_input)();
-
+// System declaration
 add_system(input_system, ["input"], []);
 add_system(
   player_controller_system,
@@ -50,7 +53,6 @@ let timeLastFrame = performance.now();
     const delta = (timeThisFrame - timeLastFrame) / 1000;
 
     run_updates(delta * timeScale);
-    //console.log(input_holder.input);
 
     timeLastFrame = timeThisFrame;
     await sleep(Math.max(0, minFrameTime - delta));

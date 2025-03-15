@@ -92,8 +92,8 @@ function vec_bezier(t, ...vecs) {
 }
 
 function vec_rotate(vec, rad) {
-  len = vec_length(vec);
-  angle = Math.atan2(vec.y, vec.x) + rad;
-
-  return { x: Math.cos(angle) * len, y: Math.sin(angle) * len };
+  return {
+    x: Math.cos(rad) * vec.x - Math.sin(rad) * vec.y,
+    y: Math.sin(rad) * vec.x + Math.sin(rad) * vec.y,
+  };
 }
