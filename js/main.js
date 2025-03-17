@@ -32,7 +32,7 @@ enemy = pipe_with_args(
   { func: insert_vec2d, args: { key: "position", x: 600, y: 200 } },
   { func: insert_vec2d, args: { key: "velocity", x: 0, y: 0 } },
   { func: insert_collide, args: { layers: [], masks: ["players"] } },
-  { func: insert_circular_collider, args: { radius: 20 } },
+  { func: insert_circular_collider, args: { radius: 10 } },
 )();
 
 input_holder = pipe(spawn, insert_input)();

@@ -44,10 +44,9 @@ function vec_mult(vec, num) {
   return { x: v.x * num, y: v.y * num };
 }
 
-function vec_length(vec) {
+function vec_length(v) {
   // length of the vec2d
-  v = get_vec2d_ptr(vec);
-  return Math.sqrt(v.x * v.x + v.y + v.y);
+  return Math.sqrt((v.x * v.x) + (v.y * v.y));
 }
 
 /*

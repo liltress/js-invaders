@@ -34,6 +34,11 @@ function colission_system(ents) {
   .filter((pair) => { 
     return intersection(pair[0].collide.layers, pair[1].collide.masks).length != 0
   })
+  .filter((pair) => {
+    return vec_length(vec_sub(pair[0].position, pair[1].position)) <= 
+      pair[0].circular_collider.radius +
+       pair[1].circular_collider.radius;
+  })
   .forEach(pair => {
     console.log(pair[0], pair[1]);
   });
