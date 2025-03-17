@@ -31,5 +31,5 @@ function wall_colission_system(ents) {
   const circular_colliders = query("circular_collider", (entities = ents));
 
   const vert_wall_against_circle = cartesian(vert_walls, circular_colliders);
-  console.log(vert_wall_against_circle);
+  console.log("from inside wall colission:", vert_wall_against_circle);
 }

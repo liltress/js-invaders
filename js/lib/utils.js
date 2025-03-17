@@ -18,7 +18,6 @@ function intersection(a) {
 }
 
 function deep_copy(a) {
-  // my original
   if (typeof a != "object") {
     return a;
   }
