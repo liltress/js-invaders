@@ -64,6 +64,7 @@ const timeScale = 1;
 let timeThisFrame = performance.now();
 let timeLastFrame = performance.now();
 
+// game loop
 (async () => {
   // wrapping the game logic in an anonymous function to enable async functionality
   while (true) {
