@@ -21,7 +21,7 @@ player = pipe_with_args(
     args: { layer: 2, color: Colors.Green, radius: 15 },
   },
 
-  { func: insert_collide, args: { layers: ["player"], masks: [] }},
+  { func: insert_collide, args: { colission_logic: print_on_collide, layers: ["player"], masks: [] }},
   { func: insert_circular_collider, args: { radius: 15 } },
   insert_input,
 )();
@@ -31,7 +31,7 @@ enemy = pipe_with_args(
   insert_circle,
   { func: insert_vec2d, args: { key: "position", x: 600, y: 200 } },
   { func: insert_vec2d, args: { key: "velocity", x: 0, y: 0 } },
-  { func: insert_collide, args: { layers: [], masks: ["players"] } },
+  { func: insert_collide, args: { layers: [], masks: ["players"], colission_logic: print_on_collide } },
   { func: insert_circular_collider, args: { radius: 10 } },
 )();
 

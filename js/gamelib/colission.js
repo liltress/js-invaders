@@ -40,8 +40,12 @@ function colission_system(ents) {
        pair[1].circular_collider.radius;
   })
   .forEach(pair => {
-    console.log(pair[0], pair[1]);
+    pair[0].collide.func(pair[0], pair[1]);
   });
+}
+
+function print_on_collide(ent1, ent2) {
+  console.log(ent1, "\n", ent2);
 }
 
 
