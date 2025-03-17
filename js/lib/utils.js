@@ -25,7 +25,7 @@ function deep_copy(a) {
 }
 
 function comp_obj_by_signature(obj1, obj2) {
-  return JSON.stringify(Object.keys(obj1)) == JSON.stringify(Object.keys(obj2));
+  return JSON.stringify(Object.keys(obj1)) === JSON.stringify(Object.keys(obj2));
 }
 
 pipe =

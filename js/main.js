@@ -5,57 +5,34 @@ const context = c.getContext("2d");
 player = pipe_with_args(
   spawn,
   insert_player,
-  { func: insert_vec2d, args: { key: "position", x: 325, y: 300 } },
+  { func: insert_vec2d, args: { key: "position", x: 600, y: 600 } },
   { func: insert_vec2d, args: { key: "velocity", x: 0, y: 0 } },
   {
     func: insert_player_controller,
-    args: { steer_rate: 5, looking_at: 0, speed: 90 },
+    args: { speed: 90 },
   },
+  { 
+    func: insert_hp,
+    args: { hp: 3 }
+  },
+
   {
     func: insert_circle,
     args: { layer: 2, color: Colors.Green, radius: 15 },
   },
-  insert_collide,
+
+  { func: insert_collide, args: { layers: ["player"], masks: [] }},
   { func: insert_circular_collider, args: { radius: 15 } },
   insert_input,
 )();
 
-wall_left = pipe_with_args(
+enemy = pipe_with_args(
   spawn,
-  insert_collide,
-  { func: insert_vec2d, args: { key: "position", x: 0, y: 0 } },
-  {
-    func: insert_wall,
-    args: { vert: true },
-  },
-)();
-wall_right = pipe_with_args(
-  spawn,
-  insert_collide,
-  { func: insert_vec2d, args: { key: "position", x: 1200, y: 0 } },
-  {
-    func: insert_wall,
-    args: { vert: true },
-  },
-)();
-wall_top = pipe_with_args(
-  spawn,
-  insert_collide,
-  { func: insert_vec2d, args: { key: "position", x: 0, y: 675 } },
-  {
-    func: insert_wall,
-    args: { vert: true },
-  },
-)();
-
-wall_bottom = pipe_with_args(
-  spawn,
-  insert_collide,
-  { func: insert_vec2d, args: { key: "position", x: 1200, y: 675 } },
-  {
-    func: insert_wall,
-    args: { vert: true },
-  },
+  insert_circle,
+  { func: insert_vec2d, args: { key: "position", x: 600, y: 200 } },
+  { func: insert_vec2d, args: { key: "velocity", x: 0, y: 0 } },
+  { func: insert_collide, args: { layers: [], masks: ["players"] } },
+  { func: insert_circular_collider, args: { radius: 20 } },
 )();
 
 input_holder = pipe(spawn, insert_input)();
@@ -63,12 +40,16 @@ input_holder = pipe(spawn, insert_input)();
 // System declaration
 add_system(input_system, ["input"], []);
 add_system(
+  colission_system,
+  ["collide", "circular_collider"],
+  ["nocollide"],
+);
+add_system(
   player_controller_system,
   ["position", "velocity", "player_controller", "input"],
   [],
   (do_delta = true),
 );
-add_system(wall_colission_system, ["collide"], ["nocollide"]);
 add_system(
   velocity_system_toggle,
   ["position", "velocity"],

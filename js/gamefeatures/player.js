@@ -5,8 +5,6 @@ function insert_player_controller(
   args = { steer_rate: 1, looking_at: 0, speed: 20 },
 ) {
   insert_component(ent, "player_controller", {
-    steer_rate: args.steer_rate,
-    looking_at: args.looking_at,
     speed: args.speed,
   });
   return ent;
@@ -38,12 +36,11 @@ function player_controller_system(players, delta) {
     }
 
     player.velocity = {
-      x:
-        player.player_controller.speed *
-        Math.cos(player.player_controller.looking_at),
-      y:
-        player.player_controller.speed *
-        Math.sin(player.player_controller.looking_at),
+      x: player.input.right && !player.input.left ?
+       player.player_controller.speed :
+        !player.input.right && player.input.left ? 
+          -player.player_controller.speed : 0,
+      y: 0,
     };
   });
 }

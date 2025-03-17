@@ -1,12 +1,15 @@
 // handles turning around things when they collide
 
-function insert_nocollide(ent) {
-  insert_component(ent, "nocollide", null);
+function insert_collide(ent, args={layers:[], masks:[], colission_logic:()=>{console.log("no colission logic provided!");}}) {
+  insert_component(ent, "collide", 
+  {func: args.colission_logic, 
+    layers: args.layers, 
+    masks: args.masks });
   return ent;
 }
 
-function insert_collide(ent) {
-  insert_component(ent, "collide", null);
+function insert_nocollide(ent) {
+  insert_component(ent, "nocollide", null);
   return ent;
 }
 
@@ -24,12 +27,27 @@ function insert_circular_collider(ent, args = { radius: 20 }) {
   return ent;
 }
 
-function wall_colission_system(ents) {
-  const vert_walls = query("vert_wall", (entities = ents));
-  const horz_walls = query("horz_wall", (entities = ents));
-
-  const circular_colliders = query("circular_collider", (entities = ents));
-
-  const vert_wall_against_circle = cartesian(vert_walls, circular_colliders);
-  console.log("from inside wall colission:", vert_wall_against_circle);
+function colission_system(ents) {
+  console.log("colission system");
+  cartesian(ents, ents)
+  .filter((pair) => { return pair[0] != pair[1] })
+  .filter((pair) => { 
+    return intersection(pair[0].collide.layers, pair[1].collide.masks).length != 0
+  })
+  .forEach(pair => {
+    console.log(pair[0], pair[1]);
+  });
 }
+
+
+/*
+has to have a mark that overlaps with a layer
+layers         masks
+1 = a, b, c;   a
+2 = b, c;      b, c
+3 = a;         a, b, c
+
+~1, 1~    1, 2     1, 3
+ 2, 1    ~2, 2~    2, 3
+ 3, 1     3, 2    ~3, 3~
+*/
