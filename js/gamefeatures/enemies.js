@@ -19,7 +19,7 @@ function gen_positions(xn, yn, diameter, margin) {
     for (var j = 0; j < xn; j++) {
       units[i].push({
         x: hw - aw / 2 + diameter / 2 + (diameter + margin) * j,
-        y: height * 0.2 + i * (diameter + margin),
+        y: height * 0.1 + i * (diameter + margin),
       });
     }
   }
@@ -47,6 +47,18 @@ function spawn_enemies(positions, hp, speed, xn, diameter, margin) {
           func: insert_vec2d,
           args: { key: "left_wall", x: pos.x - (width - aw) / 2, y: 0 },
         },
+        {
+          func: insert_collide,
+          args: {
+            colission_logic: print_on_collide,
+            layers: ["enemy"],
+            masks: ["player"],
+          },
+        },
+        {
+          func: insert_circular_collider,
+          radius: diameter / 2,
+        },
       )();
     });
   });
@@ -66,7 +78,38 @@ function enemy_movement_system(ents) {
   ents.forEach((ent) => {
     if (ent.position.x > ent.right_wall.x || ent.position.x < ent.left_wall.x) {
       ent.velocity.x = -ent.velocity.x;
-      ent.position.y += ent.sprite.spritedata.radius * 2;
+      ent.position.x += ent.position.x > ent.right_wall.x ? -5 : 5;
+      ent.position.y += ent.sprite.spritedata.radius;
+    }
+    if (ent.position.y > height) {
+      remove_system(velocity_system_toggle);
+      alert("you lost ! insert a yellow circle");
     }
   });
+}
+
+function insert_enemy_scheduler(ent) {
+  insert_component(ent, "enemy_scheduler", { turn: 0 });
+}
+
+function enemy_scheduler_system(ents) {
+  scheduler = query("enemy_scheduler", ents)[0];
+  t = scheduler.enemy_scheduler.turn;
+  enemies = query_without("enemy_scheduler", ents);
+  console.log(enemies);
+  turn_tax = Math.max(5, Math.floor(t / 3));
+  if (enemies.length == 0) {
+    summon_wave(
+      Math.floor(t / 3) + 1,
+      Math.min(1000, 150 + t * 25),
+      Math.min(25, 5 + t),
+      Math.min(5, t + 1),
+      40,
+      45,
+    );
+
+    scheduler.enemy_scheduler.turn += 1;
+    scheduler.enemy_scheduler.turn =
+      scheduler.enemy_scheduler.turn > 4 ? 100 : scheduler.enemy_scheduler.turn;
+  }
 }

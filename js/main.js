@@ -9,7 +9,7 @@ player = pipe_with_args(
   { func: insert_vec2d, args: { key: "velocity", x: 0, y: 0 } },
   {
     func: insert_player_controller,
-    args: { speed: 150 },
+    args: { speed: 180 },
   },
   {
     func: insert_hp,
@@ -27,26 +27,16 @@ player = pipe_with_args(
   insert_input,
 )();
 
-enemy = pipe_with_args(
-  spawn,
-  insert_circle,
-  insert_nodraw,
-  { func: insert_vec2d, args: { key: "position", x: 600, y: 200 } },
-  { func: insert_vec2d, args: { key: "velocity", x: 0, y: 0 } },
-  {
-    func: insert_collide,
-    args: { layers: [], masks: ["players"], colission_logic: print_on_collide },
-  },
-  { func: insert_circular_collider, args: { radius: 10 } },
-)();
-
 input_holder = pipe(spawn, insert_input)();
 
-summon_wave(1, 200, 5, 3, 40, 20);
+enemy_scheduler = pipe(spawn, insert_enemy, insert_enemy_scheduler)();
+
+//summon_wave(1, 200, 5, 3, 40, 20);
 
 // System declaration
 add_system(input_system, ["input"], []);
 add_system(colission_system, ["collide", "circular_collider"], ["nocollide"]);
+
 add_system(
   player_controller_system,
   ["position", "velocity", "player_controller", "input"],
@@ -60,7 +50,11 @@ add_system(
   [],
   (do_delta = true),
 );
+
 add_system(health_system, ["hp"], []);
+add_system(despawn_timer_system, ["despawn_timer"], [], (do_delta = true));
+add_system(enemy_scheduler_system, ["enemy"], []);
+
 add_system(draw_system, ["position", "sprite"], ["nodraw"]);
 
 // game loop

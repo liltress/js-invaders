@@ -54,7 +54,7 @@ function colission_system(ents) {
       );
     })
     .forEach((pair) => {
-      pair[0].collide.func(pair[0], pair[1]);
+      pair[1].collide.func(pair[0], pair[1]);
     });
 }
 
