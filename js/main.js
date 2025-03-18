@@ -9,11 +9,11 @@ player = pipe_with_args(
   { func: insert_vec2d, args: { key: "velocity", x: 0, y: 0 } },
   {
     func: insert_player_controller,
-    args: { speed: 90 },
+    args: { speed: 150 },
   },
-  { 
+  {
     func: insert_hp,
-    args: { hp: 3 }
+    args: { hp: 3 },
   },
 
   {
@@ -21,7 +21,10 @@ player = pipe_with_args(
     args: { layer: 2, color: Colors.Green, radius: 15 },
   },
 
-  { func: insert_collide, args: { colission_logic: print_on_collide, layers: ["player"], masks: [] }},
+  {
+    func: insert_collide,
+    args: { colission_logic: print_on_collide, layers: ["player"], masks: [] },
+  },
   { func: insert_circular_collider, args: { radius: 15 } },
   insert_input,
 )();
@@ -31,7 +34,10 @@ enemy = pipe_with_args(
   insert_circle,
   { func: insert_vec2d, args: { key: "position", x: 600, y: 200 } },
   { func: insert_vec2d, args: { key: "velocity", x: 0, y: 0 } },
-  { func: insert_collide, args: { layers: [], masks: ["players"], colission_logic: print_on_collide } },
+  {
+    func: insert_collide,
+    args: { layers: [], masks: ["players"], colission_logic: print_on_collide },
+  },
   { func: insert_circular_collider, args: { radius: 10 } },
 )();
 
@@ -39,11 +45,7 @@ input_holder = pipe(spawn, insert_input)();
 
 // System declaration
 add_system(input_system, ["input"], []);
-add_system(
-  colission_system,
-  ["collide", "circular_collider"],
-  ["nocollide"],
-);
+add_system(colission_system, ["collide", "circular_collider"], ["nocollide"]);
 add_system(
   player_controller_system,
   ["position", "velocity", "player_controller", "input"],
@@ -56,6 +58,7 @@ add_system(
   [],
   (do_delta = true),
 );
+add_system(health_system, ["hp"], []);
 add_system(draw_system, ["position", "sprite"], ["nodraw"]);
 
 const minFrameTime = 1000 / 60;
@@ -75,6 +78,6 @@ let timeLastFrame = performance.now();
 
     timeLastFrame = timeThisFrame;
     await sleep(Math.max(0, minFrameTime - delta));
-    break;
+    //break;
   }
 })();

@@ -17,30 +17,18 @@ function insert_player(ent) {
 
 function player_controller_system(players, delta) {
   players.forEach((player) => {
-    /*
-    console.log(
-      "from inside player controller system: \nplayer velocity:",
-      player.velocity,
-      "\ncontroller:",
-      player.player_controller,
-      "\ndelta:",
-      delta,
-    );
-    */
-    if (player.input.turn_counter && !player.input.turn_clockwise) {
-      player.player_controller.looking_at -=
-        player.player_controller.steer_rate * delta;
-    } else if (!player.input.turn_counter && player.input.turn_clockwise) {
-      player.player_controller.looking_at +=
-        player.player_controller.steer_rate * delta;
-    }
-
-    player.velocity = {
-      x: player.input.right && !player.input.left ?
-       player.player_controller.speed :
-        !player.input.right && player.input.left ? 
-          -player.player_controller.speed : 0,
+    const v = (player.velocity = {
+      x:
+        player.input.right &&
+        !player.input.left &&
+        player.position.x < width * 0.9
+          ? player.player_controller.speed
+          : !player.input.right &&
+              player.input.left &&
+              player.position.x > width * 0.1
+            ? -player.player_controller.speed
+            : 0,
       y: 0,
-    };
+    });
   });
 }
