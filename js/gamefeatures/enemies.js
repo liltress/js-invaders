@@ -14,18 +14,22 @@ function gen_positions(xn, yn, diameter, margin) {
   let hw = width / 2;
   let aw = xn * diameter + (xn - 1) * margin;
   let units = [];
-  for (var j = 0; j < xn; j++) {
-    units.push({
-      x: hw - aw / 2 + diameter / 2 + (diameter + margin) * j,
-      y: 0,
-    });
+  for (var i = 0; i < yn; i++) {
+    units.push([]);
+    for (var j = 0; j < xn; j++) {
+      units[i].push({
+        x: hw - aw / 2 + diameter / 2 + (diameter + margin) * j,
+        y: height * 0.2 + i * (diameter + margin),
+      });
+    }
   }
-  return [units];
+  return units;
 }
 
 function spawn_enemies(positions, hp, speed, xn, diameter, margin) {
   let aw = xn * diameter + (xn - 1) * margin;
   positions.forEach((row) => {
+    //console.log(row);
     row.forEach((pos) => {
       pipe_with_args(
         spawn,

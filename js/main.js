@@ -42,7 +42,7 @@ enemy = pipe_with_args(
 
 input_holder = pipe(spawn, insert_input)();
 
-summon_wave(1, 200, 5, 1, 40, 10);
+summon_wave(1, 200, 5, 3, 40, 20);
 
 // System declaration
 add_system(input_system, ["input"], []);
