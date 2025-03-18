@@ -42,7 +42,7 @@ enemy = pipe_with_args(
 
 input_holder = pipe(spawn, insert_input)();
 
-spawn_enemies(gen_positions(5, 1, 40, 10));
+summon_wave(1, 200, 5, 1, 40, 10);
 
 // System declaration
 add_system(input_system, ["input"], []);
@@ -53,6 +53,7 @@ add_system(
   [],
   (do_delta = true),
 );
+add_system(enemy_movement_system, ["enemy", "enemy_movement"], []);
 add_system(
   velocity_system_toggle,
   ["position", "velocity"],
